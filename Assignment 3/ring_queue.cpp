@@ -48,28 +48,23 @@ public:
 
 	public:
 		reference operator*() {
-			// Replace the line(s) below with your code.
-			return parent->buffer[0];
+			return this->parent->buffer[this->offset];
 		}
 
 		iterator& operator++() {
-			// Replace the line(s) below with your code.
-			return *this;
+			return iterator(this->parent, this->offset + 1);
 		}
 
 		iterator operator++(int unused) {
-			// Replace the line(s) below with your code.
-			return *this;
+			return iterator(this->parent, this->offset + 1);
 		}
 
 		bool operator==(const iterator& rhs) const {
-			// Replace the line(s) below with your code.
-			return true;
+			return this->offset == rhs->offset;
 		}
 
 		bool operator!=(const iterator& rhs) const {
-			// Replace the line(s) below with your code.
-			return true;
+			return this->offset != rhs->offset;
 		}
 
 	};
