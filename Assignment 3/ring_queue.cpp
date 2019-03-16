@@ -48,11 +48,17 @@ public:
 
 	public:
 		reference operator*() {
-			return this->parent->buffer[this->offset];
+			reference ref = *(this->parent->buffer);
+			return ref;
 		}
 
 		iterator& operator++() {
-			return iterator(this->parent, this->offset + 1);
+			iterator& next = *this;
+			if (this->offset < MAX_SIZE)
+				next.offset = this->offset + 1;
+			else
+				next.offset = 0;
+			return next;
 		}
 
 		iterator operator++(int unused) {
@@ -60,11 +66,11 @@ public:
 		}
 
 		bool operator==(const iterator& rhs) const {
-			return this->offset == rhs->offset;
+			return this->parent == rhs->parent && this->offset == rhs->offset;
 		}
 
 		bool operator!=(const iterator& rhs) const {
-			return this->offset != rhs->offset;
+			return this->parent != rhs->parent || this->offset != rhs->offset;
 		}
 
 	};
@@ -115,8 +121,7 @@ private:
 	// A helper function that computes the index of 'the end'
 	// of the RingQueue
 	int end_index() const {
-		// Replace the line(s) below with your code.
-		return begin_index;
+		return (begin_index + ring_size) % MAX_SIZE;
 	}
 
 
@@ -133,7 +138,7 @@ public:
 
 
 		// Replace the line(s) below with your code.
-		return buffer[0];
+		return buffer[begin_index];
 	}
 	ItemType back() const {
 		if (ring_size == 0) std::cerr << "Warning: Empty ring!\n";
@@ -142,33 +147,46 @@ public:
 
 
 		// Replace the line(s) below with your code.
-		return buffer[0];
+		return buffer[end_index];
 	}
 
 
 
 	// Mutators
 	void push_back(const ItemType& value) {
+		if (ring_size < MAX_SIZE)
+		{
+			ring_size++;
+			buffer[ring_size] = value;
+		}
+		else
+			buffer[begin_index - 1] = value;
+
 		return;
 	}
 	void pop_front() {
+		begin_index++;
+		if (begin_index > MAX_SIZE)
+			begin_index = 0;
+		ring_size--;
+
 		return;
 	}
 
 	// Functions that return iterators
 	iterator begin() {
-		// Replace the line(s) below with your code.
-		return iterator(this, 0);
+		return iterator(this, begin_index);
 	}
 	iterator end() {
-		// Replace the line(s) below with your code.
-		return iterator(this, 0);
+		if (ring_size != MAX_SIZE)
+			return iterator(this, end_index);
+		else
+			return iterator(this, end_index + 1);
 	}
 
 	// Miscellaneous functions
 	size_t size() const {
-		// Replace the line(s) below with your code.
-		return 0;
+		return ring_size;
 	}
 
 	// Debugging functions
