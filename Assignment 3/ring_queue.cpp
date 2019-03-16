@@ -55,14 +55,19 @@ public:
 		iterator& operator++() {
 			iterator& next = *this;
 			if (this->offset < MAX_SIZE)
-				next.offset = this->offset + 1;
+				next.offset++;
 			else
 				next.offset = 0;
 			return next;
 		}
 
 		iterator operator++(int unused) {
-			return iterator(this->parent, this->offset + 1);
+			iterator next = this;
+			if (this->offset < MAX_SIZE)
+				next.offset = this->offset + 1;
+			else
+				next.offset = 0;
+			return next;
 		}
 
 		bool operator==(const iterator& rhs) const {
@@ -156,11 +161,13 @@ public:
 	void push_back(const ItemType& value) {
 		if (ring_size < MAX_SIZE)
 		{
-			ring_size++;
 			buffer[ring_size] = value;
+			ring_size++;
 		}
 		else
-			buffer[begin_index - 1] = value;
+		{
+			buffer[0] = value;
+		}
 
 		return;
 	}
@@ -212,7 +219,7 @@ int main() {
 
 	std::cout << "Queue via size: \n";
 
-	// RingQueue<int,7>::iterator it = rq.begin() ; 
+	//RingQueue<int,7>::iterator it = rq.begin() ; 
 	auto it = rq.begin();
 	for (size_t i = 0; i < rq.size(); ++i) {
 		std::cout << "Value: " << *it << ", address: " << &(*it) << '\n';
