@@ -9,6 +9,7 @@ types and learning how to implement them.
 - [Assignment ReadMe](https://www.pic.ucla.edu/~rsalazar/pic10c/assignments/hw3/)
 
 ### Further Notes
-I am aware that currently the RingQueue::end() function only works for RingQueues that are not completely full. I plan on working through
-this issue in the coming week, but wanted to have something to submit for the assignment's due date as posted on CCLE. Given that Professor
-Salazar will not be personally grading the assignments until after Finals Week, I hope that this is acceptable.
+I am aware that currently the RingQueue::end() function only works for RingQueues that are not completely full. However, if the for loop
+using the iterators is replaced with a do-while loop, the output is as one would expect. I plan on working through this issue in the 
+coming week, but wanted to have something to submit for the assignment's due date as posted on CCLE. Given that Professor Salazar will 
+not be personally grading the assignments until after Finals Week, I hope that this is acceptable.
