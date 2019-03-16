@@ -70,11 +70,11 @@ public:
 		}
 
 		bool operator==(const iterator& rhs) const {
-			return this->parent == rhs->parent && this->offset == rhs->offset;
+			return this->parent == rhs.parent && this->offset == rhs.offset;
 		}
 
 		bool operator!=(const iterator& rhs) const {
-			return this->parent != rhs->parent || this->offset != rhs->offset;
+			return this->parent != rhs.parent || this->offset != rhs.offset;
 		}
 
 	};
@@ -188,10 +188,10 @@ public:
 		return iterator(this, begin_index);
 	}
 	iterator end() {
-		if (ring_size != MAX_SIZE)
-			return iterator(this, end_index);
-		else
-			return iterator(this, end_index + 1);
+		//if (begin_index == end_index())
+		//	return iterator(this, begin_index - 1);
+		//else
+			return iterator(this, end_index());
 	}
 
 	// Miscellaneous functions
@@ -236,13 +236,11 @@ int main() {
 	// implementation of RingQueue<ItemType,int>::end(). 
 	// If the implementation is not correct, it might result in 
 	// an infinite loop.
-	/**
 	std::cout << "Queue via iterators: \n";
 	for ( auto it = rq.begin() ; it != rq.end() ; ++it ) {
 	std::cout << "Value: " << *it << ", address: " << &(*it) << '\n';
 	}
 	std::cout << '\n';
-	*/
 
 
 
