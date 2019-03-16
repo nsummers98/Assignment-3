@@ -48,13 +48,12 @@ public:
 
 	public:
 		reference operator*() {
-			reference ref = *(this->parent->buffer);
-			return ref;
+			return this->parent->buffer[this->offset];
 		}
 
 		iterator& operator++() {
 			iterator& next = *this;
-			if (this->offset < MAX_SIZE)
+			if (this->offset < MAX_SIZE - 1)
 				next.offset++;
 			else
 				next.offset = 0;
@@ -63,7 +62,7 @@ public:
 
 		iterator operator++(int unused) {
 			iterator next = this;
-			if (this->offset < MAX_SIZE)
+			if (this->offset < MAX_SIZE - 1)
 				next.offset = this->offset + 1;
 			else
 				next.offset = 0;
@@ -166,14 +165,18 @@ public:
 		}
 		else
 		{
-			buffer[0] = value;
+			buffer[begin_index] = value;
+			if (begin_index < MAX_SIZE - 1)
+				begin_index++;
+			else 
+				begin_index = 0;
 		}
 
 		return;
 	}
 	void pop_front() {
 		begin_index++;
-		if (begin_index > MAX_SIZE)
+		if (begin_index > MAX_SIZE - 1)
 			begin_index = 0;
 		ring_size--;
 
@@ -245,7 +248,7 @@ int main() {
 
 	rq.dump_queue();
 
-	return 0;
+ 	return 0;
 }
 
 
