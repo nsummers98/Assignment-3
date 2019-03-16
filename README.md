@@ -1,4 +1,4 @@
-# Assignment-3
+# Assignment 3 ReadMe
 
 This project deals with the implementation of a ring queue and its iterators. The ring queue is built to hold a specified number of 
 items and can never be filled. When an element is added that goes beyond this maximum size, it replaces the first item in the array.
